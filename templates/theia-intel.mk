@@ -26,10 +26,14 @@ FPPFLAGS := -fpp -Wp,-w
 
 # NESCC systems set HDF5 as the root directory to the HDF5
 # development libraries.
+#HDF5=/apps/hdf5/1.8.14-intel-impi  <-- can compile with this, run with 1 PE, but not >1 PE
+HDF5=/apps/hdf5/1.8.14-intel
 INC = -I$(HDF5)/include $(shell nf-config --fflags)
 FFLAGS := -fno-alias -auto -safe-cray-ptr -ftz -assume byterecl -i4 -r8 -nowarn -sox -traceback $(INC)
 FFLAGS_OPT = -O3 -debug minimal -fp-model source -override-limits
 FFLAGS_DEBUG = -g -O0 -check -check noarg_temp_created -check nopointer -warn -warn noerrors -fpe0 -ftrapuv
+FFLAGS_DEBUG = -g -O0 -traceback 
+FFLAGS_DEBUG = -g -O0 -heap-arrays -traceback -check bounds -check -check noarg_temp_created -check nopointer -check all -fp-stack-check -warn -warn noerrors -fpe0 -ftrapuv
 FFLAGS_REPRO = -O2 -debug minimal -fp-model source -override-limits
 FFLAGS_OPENMP = -openmp
 FFLAGS_VERBOSE = -v -V -what
